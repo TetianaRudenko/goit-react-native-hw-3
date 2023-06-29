@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Pressable, KeyboardAvoidingView} from 'react-native';
 import  SubmitBtn from '../Components/ButtonSubmit';
 
 
@@ -8,31 +8,56 @@ const LoginForm = () => {
   const [password, setPassword] = useState(''); 
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleFormSubmit = () => {
+    { (!email || !password) && console.log("Заповніть поля форми") }
+    { email && password && console.log("Credentials", `${email} ${password}`); }
+    setEmail('');
+    setPassword('');
+  };
+
+  const hanleScreenChange = () => {
+    console.log('навігація на сторінку Регіcтрації')
+  };
 
   return (
-   
-      <View style={styled.container}>
+    <View style={styled.container}>
         <Text style={styled.title}>Увійти</Text>      
         <TextInput
           placeholder="Адреса електронної пошти"
-          onChangeText={(newEmail) => setEmail(newEmail)}
-          defaultValue={email}
           style={emailFocus ? styled.inputOnFocus : styled.input}
           onFocus={() => setEmailFocus(true)}
           onBlur={() => setEmailFocus(false)}
-          />
+          onChangeText={(newEmail) => setEmail(newEmail)}
+          value={email}
+          cursorColor="#FF6C00"
+          keyboardType='email-address'
+        />
+      <View> 
+
         <TextInput
           placeholder="Пароль"
-          onChangeText={(newPassword) => setPassword(newPassword)}
-          defaultValue={password}
-        style={passwordFocus ? [styled.inputOnFocus, {marginBottom: 42,}] : [styled.input, {marginBottom: 42,}]}
+          style={passwordFocus ? [styled.inputOnFocus, {marginBottom: 42,}] : [styled.input, {marginBottom: 42,}]}
           onFocus={() => setPasswordFocus(true)}
           onBlur={() => setPasswordFocus(false)}
-        />
-        <SubmitBtn title="Увійти"/>
-        <Text style={styled.text}>Немає акаунту? Зареєструватися</Text>
+          onChangeText={(newPassword) => setPassword(newPassword)}
+          value={password}
+          secureTextEntry={!showPassword}
+          cursorColor="#FF6C00"
+          />
+        <Pressable style={styled.showButton} onPress={() => setShowPassword(!showPassword)}>
+          <Text style={styled.showText}>{password && showPassword ? "Приховати": "Показати" }</Text>
+        </Pressable>
       </View>
-   
+         
+      <SubmitBtn title="Увійти" onPress={handleFormSubmit} />
+    
+      <Pressable style={styled.linkWrap} onPress={hanleScreenChange}> 
+        <Text style={styled.linkText}> Немає акаунту? </Text>
+        <Text style={[styled.linkText, {textDecorationLine: "underline"}]}> Зареєструватися </Text>
+      </Pressable>
+    </View>     
   );
 };
 
@@ -82,34 +107,25 @@ const styled = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#FF6C00",
   },
-  password: {
-    height: 50,
-    padding: 16,
-    marginBottom: 42,
-    fontSize: 16,
-    lineHeight: 19,
-    color: '#BDBDBD',
-    backgroundColor: '#F6F6F6',
-    borderWidth: 1,
-    borderColor: '#E8E8E8',
-    borderRadius: 8,
+  showButton: {
+    position: "absolute",
+    top: 12,
+    right: 16,
   },
-  passwordOnFocus: {
-    height: 50,
-    padding: 16,
-    marginBottom: 42,
+  showText: {
+    color: "#1B4371",
     fontSize: 16,
-    lineHeight: 19,
-    color: '#212121',
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#FF6C00',
-    borderRadius: 8,
+   
   },
-  text: {
+  linkWrap: {
+    flexDirection: "row",
+    alignSelf: "center",
     marginTop: 16,
+  },
+  linkText: {
+    //marginTop: 16,
     
-    textAlign: 'center',
+    //textAlign: 'center',
     fontSize: 16,
     lineHeight: 19,
     color: '#1B4371',

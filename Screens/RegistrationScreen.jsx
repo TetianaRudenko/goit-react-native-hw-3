@@ -6,21 +6,21 @@ import {
   ImageBackground,
   StyleSheet,
 } from 'react-native';
-import imageBg from "../assets/imageBg.png";
+import imageBg from "../assets/img/imageBg.png";
 import RegistrationForm from "../Components/RegistrationForm";
 
 const RegistrationScreen = () => {
   
   return ( 
     <KeyboardAvoidingView
-      style={styles.container}
+      style={styled.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ImageBackground
           source={imageBg}
           resizeMode="cover"
-          style={styles.image}
+          style={styled.image}
         >
 
           <RegistrationForm />
@@ -33,7 +33,7 @@ const RegistrationScreen = () => {
   );
 }
 
-const styles = StyleSheet.create({
+const styled = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -41,12 +41,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'flex-end',
-    //justifyContent: 'center',
-    //position: "absolute",
-    //top: 0,
-    //left: 0,
-    //width: Dimensions.get("window").width,
-   // height: Dimensions.get("window").height,
   },
 });
 

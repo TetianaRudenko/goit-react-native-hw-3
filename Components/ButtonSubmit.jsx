@@ -1,8 +1,8 @@
 import { Text, StyleSheet, Pressable } from 'react-native';
 
-const SubmitBtn = ({ title }) => {
+const SubmitBtn = ({ title, onPress }) => {
   return (
-    <Pressable style={styled.button} >
+    <Pressable style={({ pressed }) => [!pressed ? styled.button : [styled.button, {backgroundColor: '#BDBDBD'}]]} onPress={onPress}>
       <Text style={styled.text}>{title}</Text>
     </Pressable>
   );
@@ -12,7 +12,7 @@ const styled = StyleSheet.create({
   button: {
     height: 50,
     borderRadius: 100,
-    backgroundColor: '#FF6C00',
+    backgroundColor: 'rgb(255, 108, 0)',
     alignItems: 'center',
     justifyContent: 'center',   
   },  

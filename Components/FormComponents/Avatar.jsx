@@ -1,34 +1,65 @@
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import AddAvatarButton from "./AddAvatarButton";
+import { useState } from "react";
+import avatar from "../../assets/img/avatar.jpg"
+import { AntDesign } from '@expo/vector-icons'; 
+
 
 const Avatar = () => {
+  const [isAvatarLoaded, setIsAvatarLoaded] = useState(false);
+  
+  const handleAddAvatar = () => {
+    console.log("додай аватар");
+    setIsAvatarLoaded(!isAvatarLoaded);
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.avatar}>
-        <AddAvatarButton style={styles.avatarButton} />
-      </View>
+    <View style={styled.wrap}>
+      { !isAvatarLoaded ? (
+        <View style={styled.avatar}>
+          <AddAvatarButton
+            style={styled.iconBtn}
+            onPress={handleAddAvatar}
+          />
+        </View>
+      ) : (
+          <View>
+            <Image source={avatar}  style={styled.avatar}/>
+            <AntDesign
+              name="pluscircleo"
+              size={25}
+              color="#BDBDBD"
+              style={styled.iconBtn}
+              onPress={handleAddAvatar}
+            /> 
+        </View>
+      )}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  avatar: {
+const styled = StyleSheet.create({
+  wrap: {
     position: "absolute",
     top: -60,
-    justifyContent: "center",
     width: 120,
     height: 120,
+    alignSelf: "center",  
     borderRadius: 16,
     backgroundColor: "#F6F6F6",
   },
-  avatarButton: {
+  avatar: {
+    borderRadius: 16,
+    resizeMode: "contain",
+    width: 120,
+    height: 120,
+  },
+  iconBtn: {
     position: "absolute",
     right: -12,
     bottom: 14,
+    borderRadius: 50,
+    backgroundColor:'#ffffff',
   },
 });
 

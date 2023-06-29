@@ -12,15 +12,13 @@ const App = () => {
     "Roboto-Bold": require('./assets/fonts/Roboto-Bold.ttf'),
   });
 
-
   return (
     <View style={styles.container}>
  
-        {/* <RegistrationScreen /> */}
-        <LoginScreen />
+      <RegistrationScreen />
+      {/*  <LoginScreen /> */}
   
     </View>
-    
   );
 };
 

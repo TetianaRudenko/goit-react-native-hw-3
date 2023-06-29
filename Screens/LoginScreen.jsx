@@ -6,7 +6,7 @@ import {
   ImageBackground,
   StyleSheet,
 } from 'react-native';
-import imageBg from "../assets/imageBg.png";
+import imageBg from "../assets/img/imageBg.png";
 import LoginForm from '../Components/LoginForm';
 
 const LoginScreen = () => {

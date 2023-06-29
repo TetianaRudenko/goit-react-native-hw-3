@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View,} from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View,} from 'react-native';
 import Avatar from "../Components/FormComponents/Avatar";
 import SubmitBtn from "../Components/ButtonSubmit";
 
@@ -12,44 +12,75 @@ const RegistrationForm= () => {
   const [loginFocus, setLoginFocus] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleFormSubmit = () => {
+    { (!login || !email || !password ) && console.log("Заповніть поля форми") }
+    { login && email && password && console.log("Credentials", `${login} ${email} ${password}`) }
+    setLogin('');
+    setEmail('');
+    setPassword('');
+  };
+
+  const hanleScreenChange = () => {
+    console.log('навігація на сторінку Логіну')
+  };
 
   return ( 
-    <View style={ styles.container }>
+    <View style={styled.container }>
       <Avatar />
-      <Text style={styles.title}>Реєстрація</Text>
+      <Text style={styled.title}>Реєстрація</Text>
           
       <TextInput
         placeholder="Логін"
-        onChangeText={(newLogin) => setLogin(newLogin)}
-        defaultValue={login}
-        style={loginFocus ? styles.inputOnFocus : styles.input}
+        style={loginFocus ? styled.inputOnFocus : styled.input}
         onFocus={() => setLoginFocus(true)}
         onBlur={() => setLoginFocus(false)}
+        onChangeText={(newLogin) => setLogin(newLogin)}
+        value={login}
+        cursorColor="#FF6C00"
+        autoCapitalize='words'
       />
       <TextInput
         placeholder="Адреса електронної пошти"
-        onChangeText={(newEmail) => setEmail(newEmail)}
-        defaultValue={email}
-        style={emailFocus ? styles.inputOnFocus : styles.input}
+        style={emailFocus ? styled.inputOnFocus : styled.input}
         onFocus={() => setEmailFocus(true)}
         onBlur={() => setEmailFocus(false)}
+        onChangeText={(newEmail) => setEmail(newEmail)}
+        value={email}
+        cursorColor="#FF6C00"
+        keyboardType='email-address'
       />
-      <TextInput
-        placeholder="Пароль"
-        onChangeText={(newPassword) => setPassword(newPassword)}
-        defaultValue={password}
-        style={passwordFocus ? [styles.inputOnFocus, { marginBottom: 43,}] : [styles.input, {marginBottom: 43},]}
-        onFocus={() => setPasswordFocus(true)}
-        onBlur={() => setPasswordFocus(false)}
+      <View> 
+
+        <TextInput
+          placeholder="Пароль"
+          style={passwordFocus ? [styled.inputOnFocus, { marginBottom: 43,}] : [styled.input, {marginBottom: 43},]}
+          onFocus={() => setPasswordFocus(true)}
+          onBlur={() => setPasswordFocus(false)}
+          onChangeText={(newPassword) => setPassword(newPassword)}
+          value={password}
+          secureTextEntry={!showPassword}
+          cursorColor="#FF6C00"
         />
+        <Pressable style={styled.showButton} onPress={() => setShowPassword(!showPassword)}>
+          <Text style={styled.showText}>{password && showPassword ? "Приховати": "Показати" }</Text>
+        </Pressable>
+      </View>
+     
+      <SubmitBtn title="Зареєстуватися" onPress={handleFormSubmit} />
+       
         
-      <SubmitBtn title="Зареєстуватися"/>
-      <Text style={styles.text}>Вже є акаунт? Увійти </Text>
+      <Pressable style={styled.linkWrap} onPress={hanleScreenChange}> 
+        <Text style={styled.linkText}> Вже є акаунт? </Text>
+        <Text style={[styled.linkText, {textDecorationLine: "underline"}]}> Увійти </Text>
+      </Pressable>
+      
     </View>   
   );
 }
 
-const styles = StyleSheet.create({
+const styled = StyleSheet.create({
   container: {
     marginTop: "auto",
     height: '70%',
@@ -96,10 +127,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#FF6C00",
   },
-  text: {
+  showButton: {
+    position: "absolute",
+    top: 12,
+    right: 16,
+  },
+  showText: {
+    color: "#1B4371",
+    fontSize: 16,
+   
+  },
+  linkWrap: {
+    flexDirection: "row",
+    alignSelf: "center",
     marginTop: 16,
+  },
+  linkText: {
+    //marginTop: 16,
     
-    textAlign: 'center',
+    //textAlign: 'center',
     fontSize: 16,
     lineHeight: 19,
     color: '#1B4371',
