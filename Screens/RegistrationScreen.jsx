@@ -12,11 +12,11 @@ import RegistrationForm from "../Components/RegistrationForm";
 const RegistrationScreen = () => {
   
   return ( 
-    <KeyboardAvoidingView
-      style={styled.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={styled.keyboadAvoidWrap}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <ImageBackground
           source={imageBg}
           resizeMode="cover"
@@ -27,16 +27,16 @@ const RegistrationScreen = () => {
 
           <StatusBar style="auto" />
         </ImageBackground>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
        
   );
 }
 
 const styled = StyleSheet.create({
-  container: {
+  keyboadAvoidWrap: {
     flex: 1,
-    justifyContent: 'flex-end',
+    //justifyContent: 'flex-end',
   },
   image: {
     flex: 1,
